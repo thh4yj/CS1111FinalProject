@@ -1,7 +1,3 @@
-# Tyler Hendricks
-# computingID: thh4yj
-
-
 # Allison Branch and Tyler Hendricks
 # computingIDs: aab4ad and thh4yj
 
@@ -18,7 +14,7 @@
 # Animation - The santa character will have animations for running, jumping and sliding
 # Scrolling Level - The game will expand beyond the screen with new blocks and obstacles moving across the screen
 # Multiple Levels - The game can have multiple levels with different obstacles
-# Save Points - Allow users to return to checkpoints or to previous levels
+# Save Points - Allow users to return to beginning of level or to previous levels
 
 
 # GAME CODE BELOW!!!
@@ -54,41 +50,45 @@ jump_stages = ["Jump (1).png","Jump (2).png","Jump (3).png","Jump (4).png","Jump
 background = gamebox.from_image(500/2,400/2,"BG.png")
 background.scale_by(.45)
 
-# create path
-path1 = [gamebox.from_image(0,325,"14.png"),gamebox.from_image(75,325,"15.png"),gamebox.from_image(150,325,"15.png"),gamebox.from_image(225,325,"15.png"),gamebox.from_image(300,325,"15.png"),gamebox.from_image(375,325,"16.png"),gamebox.from_image(575,200,"14.png"),gamebox.from_image(650,200,"15.png"),gamebox.from_image(725,200,"15.png"),gamebox.from_image(800,200,"15.png"),gamebox.from_image(875,200,"16.png")
-    ,gamebox.from_image(1150,400,"14.png"),gamebox.from_image(1225,400,"16.png"),gamebox.from_image(1425,350,"14.png"),gamebox.from_image(1500,350,"15.png"),gamebox.from_image(1575,350,"15.png"),gamebox.from_image(1575,350,"15.png"),gamebox.from_image(1650,350,"15.png"),gamebox.from_image(1725,350,"15.png"),gamebox.from_image(1800,350,"15.png"),gamebox.from_image(1875,350,"16.png")]
+# make tree
+tree = gamebox.from_image(800,175,"Tree_1.png")
+tree.scale_by(.8)
 
 
+# create levels
+level1 = [gamebox.from_image(0,325,"14.png"),gamebox.from_image(75,325,"15.png"),gamebox.from_image(150,325,"15.png"),gamebox.from_image(225,325,"15.png"),
+          gamebox.from_image(300,325,"15.png"),gamebox.from_image(375,325,"16.png"),gamebox.from_image(575,250,"14.png"),gamebox.from_image(650,250,"15.png"),
+          gamebox.from_image(725,250,"15.png"),gamebox.from_image(800,250,"15.png"),gamebox.from_image(875,250,"16.png"),gamebox.from_image(1000,150,"14.png"),
+          gamebox.from_image(1075,150,"15.png"),gamebox.from_image(1150,150,"15.png"),gamebox.from_image(1225,150,"16.png"),gamebox.from_image(1425,350,"14.png"),
+          gamebox.from_image(1500,350,"15.png"),gamebox.from_image(1575,350,"15.png"),gamebox.from_image(1575,350,"15.png"),gamebox.from_image(1650,350,"15.png"),
+          gamebox.from_image(1725,350,"15.png"),gamebox.from_image(1800,350,"15.png"),gamebox.from_image(1875,350,"16.png"),gamebox.from_image(1875,290,"Crate.png"),
+          gamebox.from_image(1550,290,"Crate.png")]
 
-level_title1 = gamebox.from_text(300,50,"LEVEL 1",75,"white")
-level_title2 = gamebox.from_text(300,-50,"LEVEL 2",75,"white")
-level_title3 = gamebox.from_text(300,-50,"LEVEL 3",75,"white")
+level2 = [gamebox.from_image(25,350,"15.png"),gamebox.from_image(100,350,"15.png"),gamebox.from_image(125,350,"15.png"),gamebox.from_image(200,350,"15.png"),
+         gamebox.from_image(275,350,"15.png"),gamebox.from_image(350,350,"16.png"),gamebox.from_image(350,290,"Crate.png"),gamebox.from_image(700,200,"Crate.png"),
+          gamebox.from_image(500,250,"14.png"),gamebox.from_image(575,250,"15.png"),gamebox.from_image(650,250,"15.png"),gamebox.from_image(800,190,"SnowMan.png"),
+          gamebox.from_image(725,250,"15.png"),gamebox.from_image(800,250,"16.png"),gamebox.from_image(950,350,"14.png"),gamebox.from_image(1000,350,"16.png"),
+         gamebox.from_image(1200,250,"14.png"),gamebox.from_image(1250,250,"16.png"),gamebox.from_image(1450,150,"14.png"),gamebox.from_image(1500,150,"16.png"),
+          gamebox.from_image(1700,350,"14.png"),gamebox.from_image(1775,350,"15.png"),gamebox.from_image(1850,350,"15.png"),gamebox.from_image(1925,350,"16.png")]
 
+level3 = [gamebox.from_image(-75,150,"14.png"),gamebox.from_image(-25,150,"16.png"),gamebox.from_image(175,350,"14.png"),gamebox.from_image(250,350,"15.png"),
+         gamebox.from_image(325,350,"15.png"),gamebox.from_image(400,350,"16.png"),gamebox.from_image(500,250,"14.png"),gamebox.from_image(575,250,"15.png"),
+         gamebox.from_image(650,250,"15.png"),gamebox.from_image(725,250,"15.png"),gamebox.from_image(800,250,"15.png"),gamebox.from_image(875,250,"15.png"),
+         gamebox.from_image(950,250,"16.png"),gamebox.from_image(700,200,"Crate.png"),gamebox.from_image(700,150,"Crate.png"),tree,
+          gamebox.from_image(1140,350,"14.png"),gamebox.from_image(1160,350,"16.png"),gamebox.from_image(1340,250,"14.png"),gamebox.from_image(1360,250,"16.png"),
+          gamebox.from_image(1540,125,"14.png"),gamebox.from_image(1560,125,"16.png")]
 
-
-
-path2 = [gamebox.from_image(0,350,"14.png"),gamebox.from_image(75,350,"15.png"),gamebox.from_image(150,350,"15.png"),gamebox.from_image(225,350,"15.png"),
-         gamebox.from_image(300,350,"15.png"),
-         gamebox.from_image(375,350,"16.png"),gamebox.from_image(700,200,"Crate.png"),gamebox.from_image(500,250,"14.png"),gamebox.from_image(575,250,"15.png"),
-         gamebox.from_image(650,250,"15.png"),gamebox.from_image(800,190,"SnowMan.png"),gamebox.from_image(725,250,"15.png"),
-         gamebox.from_image(800,250,"16.png"),gamebox.from_image(950,350,"14.png"),gamebox.from_image(1000,350,"16.png"),
-         gamebox.from_image(1200,250,"14.png"),gamebox.from_image(1250,250,"16.png"),gamebox.from_image(1450,150,"14.png"),gamebox.from_image(1500,150,"16.png"),gamebox.from_image(1700,350,"14.png"),gamebox.from_image(1775,350,"15.png"),
-         gamebox.from_image(1850,350,"15.png"),gamebox.from_image(1925,350,"16.png")]
-
-path3 = [gamebox.from_image(-75,150,"14.png"),gamebox.from_image(-25,150,"16.png"),gamebox.from_image(175,350,"14.png"),gamebox.from_image(250,350,"15.png"),
-         gamebox.from_image(325,350,"15.png"),gamebox.from_image(400,350,"16.png")]
-
-
-
-
-for object in path1:
+for object in level1:
     object.scale_by(.6)
-for object in path3:
-    object.scale_by
-for object in path2:
+for object in level2:
     object.scale_by(.6)
-for object in path3:
+for object in level3:
     object.scale_by(.6)
+
+level_title1 = gamebox.from_text(255,75,"LEVEL 1",100,"white")
+level_title2 = gamebox.from_text(255,-100,"LEVEL 2",100,"white")
+level_title3 = gamebox.from_text(255,-100,"LEVEL 3",100,"white")
+
 
 # initialize variables
 start_screen = True
@@ -100,12 +100,8 @@ speed = 0
 y_pos = 220
 jump = False
 jump_count = 0
-paths = [path1,path2]
-current_path = paths[0]
-index = 0
+current_level = level1
 level = 1
-santa = gamebox.from_image(275, 180, "Idle (1).png")
-
 
 # main loop
 def tick(keys):
@@ -119,26 +115,22 @@ def tick(keys):
     global y_pos
     global jump
     global jump_count
-    global current_path
-    global index
-    global paths
+    global current_level
     global level
-    global santa
 
-    # DRAW BACKGROUND AND GROUND
+    # DRAW BACKGROUND
     camera.draw(background)
-    # for block in ground:
-    #     camera.draw(block)
 
-    # DISPLAY START SCREEN UNTIL PLAYER PRESSES SPACE
-    # --- Should add game instructions later
+
+    # DISPLAY START SCREEN UNTIL PLAYER PRESSES SPACE OR I TO VIEW INSTRUCTIONS
     if start_screen:
         camera.draw(gamebox.from_text(250,40,"SANTA RUN",100,"white"))
         camera.draw(gamebox.from_text(250,310,"Press Space To Start",50,"white"))
         camera.draw(gamebox.from_text(240,200, "aab4ad                         thh4yj",40,"white"))
-        santa = gamebox.from_image(275,180,"Idle (1).png")
+        idle = gamebox.from_image(275,180,"Idle (1).png")
         camera.draw(gamebox.from_text(250, 350, 'Hold the I key to view instructions', 30, 'white'))
-        santa.scale_by(.4)
+        idle.scale_by(.4)
+        camera.draw(idle)
         if pygame.K_SPACE in keys:
             start_screen = False
             play = True
@@ -161,16 +153,18 @@ def tick(keys):
 
     elif play == True:
 
-
-        # KEEP TRACK OF DISTANCE AND DISPLAY IT IN TOP RIGHT
+        # DISPLAY PERCENT OF LEVEL COMPLETED IN TOP RIGHT --> each level has a distance of 50
         distance += 1/3
-        camera.draw(gamebox.from_text(450,30,str(int(distance))+" m",25,"white"))
+        if distance > 50:
+            distance = 0
+        camera.draw(gamebox.from_text(450,30,str(int(distance*2))+" %",25,"white"))
 
 
-        # SLIDE WHEN DOWN ARROW PRESSED
-        if pygame.K_DOWN in keys and jump == False:
+        # SLIDE WHEN DOWN ARROW PRESSED --> this is not really useful now...
+        if (pygame.K_DOWN in keys or pygame.K_s in keys) and jump == False:
             santa = gamebox.from_image(150, y_pos,slide_stages[frame])
             santa.scale_by(.2)
+            camera.draw(santa)
 
 
         # JUMP WHEN UP ARROW PRESSED
@@ -179,11 +173,13 @@ def tick(keys):
             speed = 40
             santa = gamebox.from_image(150, y_pos, jump_stages[0])
             santa.scale_by(.2)
+            camera.draw(santa)
             keys.clear()
 
         if jump:
             santa = gamebox.from_image(150, y_pos, jump_stages[jump_count])
             santa.scale_by(.2)
+            camera.draw(santa)
             jump_count += 1
             if jump_count == 11:
                 jump_count = 0
@@ -194,42 +190,44 @@ def tick(keys):
         if jump == False and not pygame.K_DOWN in keys:
             santa = gamebox.from_image(150, y_pos, run_stages[frame])
             santa.scale_by(.2)
+            camera.draw(santa)
 
 
-        # OBSTACLES OR BLOCKS TO WALK ON
-
+        # LEVELS
         camera.draw(level_title1)
-        level_title1.move(0,-5)
+        level_title1.move(0,-1)
         camera.draw(level_title2)
-        level_title2.move(0,-5)
+        level_title2.move(0,-1)
         camera.draw(level_title3)
-        level_title3.move(0,-5)
+        level_title3.move(0,-1)
 
-
-        for object in current_path:
+        for object in current_level:
             camera.draw(object)
             if y_pos - speed > object.top -50 and santa.x < object.right and santa.x > object.left:
                 y_pos = object.top - 50
                 speed = 0
                 jump = False
+                if santa.right > object.left and santa.y > object.top and santa.y < object.bottom:
+                    game_over = True
+                    play = False
 
+            # CHANGE TO NEXT LEVEL WHEN LEVEL IS OVER
+            if object.x < -1500 and level == 3:
+                distance = 50
+                game_over = True
+                play = False
             if object.x < -1500 and level == 2:
-                current_path = path3
-                print("LEVEL 3")
+                current_level = level3
                 distance = 0
                 level_title3.y = 50
-
+                level += 1
             if object.x < -1500 and level == 1:
-                print("LEVEL 2")
-                current_path = path2
+                current_level = level2
                 distance = 0
                 level += 1
                 level_title2.y = 50
 
-
-
             object.move(-10,0)
-
 
 
         # CHARACTER'S Y POSITION CHANGES BY THEIR SPEED AND DOWNWARD SPEED INCREASES (GRAVITY)
@@ -242,42 +240,82 @@ def tick(keys):
             frame = 0
 
 
-        # CHECK FOR GAME OVER
+        # END GAME IF CHARACTER FALLS OFF SCREEN
         if y_pos > 400:
             play = False
             game_over = True
 
 
     # DISPLAY END SCREEN WHEN GAME IS OVER
-    # --- add way to restart game (possibly at a checkpoint)
     elif game_over:
-        camera.draw(gamebox.from_text(250, 50, "GAME OVER", 100, "white"))
-        camera.draw(gamebox.from_text(250, 200, str(int(distance)) + " m", 200, "white"))
-        camera.draw(gamebox.from_text(250,350,"Press R to restart level",50,"white"))
-        if pygame.K_r in keys:
-            if current_path == path1:
-                for object in path1:
-                    object.move(distance*3*10,0)
-                level_title1.y = 50
-            if current_path == path2:
-                for object in path2:
-                    object.move(distance*3*10,0)
-                level_title2.y = 50
-            if current_path == path3:
-                for object in path3:
-                    object.move(distance*3*10,0)
-                level_title2.y = 50
+
+        # IF ALL LEVELS HAVE BEEN COMPLETED ALLOW USER TO CHOOSE A LEVEL TO REPLAY
+        if distance == 50 and level ==3:
+            camera.draw(gamebox.from_text(250, 50, "CONGRATULATIONS", 50, "white"))
+            camera.draw(gamebox.from_text(250, 150,"All levels completed!", 50, "white"))
+            camera.draw(gamebox.from_text(250,350,"Replay a level. (Press 1,2 or 3) ",50,"white"))
+
+            if pygame.K_1 in keys:
+                for object in level1:
+                    object.move(1500,0)
+                    level_title1.y = 50
+                    current_level = level1
+                    y_pos = 230
+                    speed = 0
+                    distance = 0
+                    game_over = False
+                    play = True
+            if pygame.K_2 in keys:
+                for object in level2:
+                    object.move(1500,0)
+                    level_title2.y = 50
+                    current_level = level2
+                    y_pos = 230
+                    speed = 0
+                    distance = 0
+                    game_over = False
+                    play = True
+            if pygame.K_3 in keys:
+                for object in level3:
+                    object.move(1500,0)
+                    level_title3.y = 50
+                    current_level = level3
+                    y_pos = 230
+                    speed = 0
+                    distance = 0
+                    game_over = False
+                    play = True
 
 
-            y_pos = 230
-            speed = 0
-            distance = 0
-            game_over = False
-            play = True
+        # IF ALL LEVEL FAILED COMPLETED ALLOW USER TO RETRY CURRENT LEVEL FROM BEGINNING
+        else:
+            camera.draw(gamebox.from_text(250, 50, "GAME OVER", 100, "white"))
+            camera.draw(gamebox.from_text(250, 200, str(int(distance/50*100)) + " %", 100, "white"))
+            camera.draw(gamebox.from_text(250,350,"Press R to restart level",50,"white"))
+
+            if pygame.K_r in keys:
+                if current_level == level1:
+                    for object in level1:
+                        object.move(3*10*distance,0)
+                    level_title1.y = 50
+
+                if current_level == level2:
+                    for object in level2:
+                        object.move(distance*3*10,0)
+                    level_title2.y = 50
+
+                if current_level == level3:
+                    for object in level3:
+                        object.move(distance*3*10,0)
+                    level_title3.y = 50
+
+                y_pos = 230
+                speed = 0
+                distance = 0
+                game_over = False
+                play = True
 
 
-
-    camera.draw(santa)
     camera.display()
 
 
