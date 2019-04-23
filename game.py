@@ -17,7 +17,7 @@
 # Save Points - Allow users to return to checkpoints or to previous levels
 
 
-# STARTER CODE BELOW!!!
+# GAME CODE BELOW!!!
 
 import pygame
 import gamebox
@@ -30,6 +30,8 @@ camera = gamebox.Camera(screen_width,screen_height)
 
 
 # IMAGES - all are from www.gameart2d.com
+# -------- images and sprites are copyright/royalty free and free to use!
+
 # walking animation images
 run_stages = ["Run (1).png","Run (2).png","Run (3).png","Run (4).png","Run (5).png","Run (6).png",
                 "Run (7).png","Run (8).png", "Run (9).png","Run (10).png","Run (11).png"]
@@ -47,21 +49,30 @@ jump_stages = ["Jump (1).png","Jump (2).png","Jump (3).png","Jump (4).png","Jump
 # create background
 background = gamebox.from_image(500/2,400/2,"BG.png")
 background.scale_by(.45)
-ground = [gamebox.from_image(50,400,"2.png"),gamebox.from_image(175,400,"2.png"),gamebox.from_image(300,400,"2.png"),
-          gamebox.from_image(425,400,"2.png"),gamebox.from_image(550,400,"2.png")]
 
+# create path
+path1 = [gamebox.from_image(0,325,"14.png"),gamebox.from_image(75,325,"15.png"),gamebox.from_image(150,325,"15.png"),gamebox.from_image(225,325,"15.png"),gamebox.from_image(300,325,"15.png"),gamebox.from_image(375,325,"16.png"),gamebox.from_image(575,200,"14.png"),gamebox.from_image(650,200,"15.png"),gamebox.from_image(725,200,"15.png"),gamebox.from_image(800,200,"15.png"),gamebox.from_image(875,200,"16.png")]
+
+for object in path1:
+    object.scale_by(.6)
+path2 = [gamebox.from_image(500,250,"14.png"),gamebox.from_image(575,250,"15.png"),gamebox.from_image(650,250,"15.png"),gamebox.from_image(725,200,""),gamebox.from_image(725,250,"15.png"),gamebox.from_image(800,250,"15.png"),gamebox.from_image(875,250,"15.png"),gamebox.from_image(950,250,"15.png"),gamebox.from_image(1025,250,"15.png"),gamebox.from_image(1100,250,"15.png"),gamebox.from_image(1175,250,"16.png")]
+for object in path2:
+    object.scale_by(.6)
 
 # initialize variables
 start_screen = True
 play = False
 game_over = False
 distance = 0
-count = 0
 frame = 0
 speed = 0
-y_pos = 280
+y_pos = 220
 jump = False
 jump_count = 0
+paths = [path1,path2]
+current_path = paths[0]
+index = 0
+
 
 # main loop
 def tick(keys):
@@ -75,12 +86,15 @@ def tick(keys):
     global y_pos
     global jump
     global jump_count
+    global current_path
+    global index
+    global paths
 
 
     # DRAW BACKGROUND AND GROUND
     camera.draw(background)
-    for block in ground:
-        camera.draw(block)
+    # for block in ground:
+    #     camera.draw(block)
 
     # DISPLAY START SCREEN UNTIL PLAYER PRESSES SPACE
     # --- Should add game instructions later
@@ -113,7 +127,7 @@ def tick(keys):
         # JUMP WHEN UP ARROW PRESSED
         elif pygame.K_UP in keys:
             jump = True
-            speed = 35
+            speed = 40
             santa = gamebox.from_image(150, y_pos, jump_stages[0])
             santa.scale_by(.2)
             camera.draw(santa)
@@ -136,11 +150,24 @@ def tick(keys):
             camera.draw(santa)
 
 
-        # STOPS CHARACTER STOPS WHEN IT HITS GROUND
-        if santa.y - speed >= 282:
-            y_pos = 282
-            camera.draw(santa)
-            speed = 5
+        # # STOPS CHARACTER STOPS WHEN IT HITS GROUND
+        # if santa.y - speed >= 282:
+        #     y_pos = 282
+        #     camera.draw(santa)
+        #     speed = 5
+
+
+        # WILL ADD OBSTACLES AND/OR BLOCKS TO WALK ON
+        for object in current_path:
+            if object.x < -1000:
+                current_path = paths[index + 1]
+            camera.draw(object)
+            if y_pos - speed > object.top -50 and santa.x < object.right and santa.x > object.left:
+                y_pos = object.top - 50
+                speed = 0
+                jump = False
+            object.move(-10,0)
+
 
 
         # CHARACTER'S Y POSITION CHANGES BY THEIR SPEED AND DOWNWARD SPEED INCREASES (GRAVITY)
@@ -153,27 +180,18 @@ def tick(keys):
             frame = 0
 
 
-        # WILL ADD OBSTACLES AND/OR BLOCKS TO WALK ON
-        #
-        #
-        #
-        #
-        #
-
-
         # CHECK FOR GAME OVER
-        # --- eventually will check for collision with obstacles
-        # --- for now can reach end screen by pressing q key
-        # --- can add high scores here
-        if pygame.K_q in keys:
+        if y_pos > 400:
+            play = False
             game_over = True
 
 
+
     # DISPLAY END SCREEN WHEN GAME IS OVER
-    # --- can later add way to restart game (possibly at a checkpoint)
+    # --- add way to restart game (possibly at a checkpoint)
     elif game_over:
             camera.draw(gamebox.from_text(250, 75, "GAME OVER", 100, "white"))
-            camera.draw(gamebox.from_text(250, 200, str(distance) + " m", 250, "white"))
+            camera.draw(gamebox.from_text(250, 200, str(int(distance)) + " m", 200, "white"))
 
 
     camera.display()
