@@ -26,7 +26,7 @@ import gamebox
 pygame.display.set_caption("SANTA RUN!")
 screen_width = 500
 screen_height = 400
-camera = gamebox.Camera(screen_width, screen_height)
+camera = gamebox.Camera(screen_width,screen_height)
 
 
 # IMAGES - all are from www.gameart2d.com
@@ -51,17 +51,23 @@ background = gamebox.from_image(500/2,400/2,"BG.png")
 background.scale_by(.45)
 
 # create path
-path1 = [gamebox.from_image(0,325,"14.png"),gamebox.from_image(75,325,"15.png"),gamebox.from_image(150,325,"15.png"),
-         gamebox.from_image(225,325,"15.png"),gamebox.from_image(300,325,"15.png"),gamebox.from_image(375,325,"16.png"),
-         gamebox.from_image(575,200,"14.png"),gamebox.from_image(650,200,"15.png"),gamebox.from_image(725,200,"15.png"),
-         gamebox.from_image(800,200,"15.png"),gamebox.from_image(875,200,"16.png")]
+path1 = [gamebox.from_image(0,325,"14.png"),gamebox.from_image(75,325,"15.png"),gamebox.from_image(150,325,"15.png"),gamebox.from_image(225,325,"15.png"),gamebox.from_image(300,325,"15.png"),gamebox.from_image(375,325,"16.png"),gamebox.from_image(575,200,"14.png"),gamebox.from_image(650,200,"15.png"),gamebox.from_image(725,200,"15.png"),gamebox.from_image(800,200,"15.png"),gamebox.from_image(875,200,"16.png")
+    ,gamebox.from_image(1150,400,"14.png"),gamebox.from_image(1225,400,"16.png"),gamebox.from_image(1425,350,"14.png"),gamebox.from_image(1500,350,"15.png"),gamebox.from_image(1575,350,"15.png"),gamebox.from_image(1575,350,"15.png"),gamebox.from_image(1650,350,"15.png"),gamebox.from_image(1725,350,"15.png"),gamebox.from_image(1800,350,"15.png"),gamebox.from_image(1875,350,"16.png")]
+
+
+path2 = [gamebox.from_image(0,350,"14.png"),gamebox.from_image(75,350,"15.png"),gamebox.from_image(150,350,"15.png"),gamebox.from_image(225,350,"15.png"),gamebox.from_image(300,350,"15.png"),gamebox.from_image(375,350,"16.png"),gamebox.from_image(375,290,"Crate.png"),gamebox.from_image(500,200,"14.png"),gamebox.from_image(575,200,"15.png"),gamebox.from_image(650,200,"15.png"),gamebox.from_image(725,200,"15.png"),gamebox.from_image(800,200,"15.png"),gamebox.from_image(875,200,"16.png")]
+
+levels = [path1,path2]
+
+
+level_title1 = gamebox.from_text(300,50,"LEVEL 1",75,"white")
 
 for object in path1:
     object.scale_by(.6)
-path2 = [gamebox.from_image(500,250,"14.png"),gamebox.from_image(575,250,"15.png"),gamebox.from_image(650,250,"15.png"),
-         gamebox.from_image(725,200,"15.png"),gamebox.from_image(725,250,"15.png"),gamebox.from_image(800,250,"15.png"),
-         gamebox.from_image(875,250,"15.png"),gamebox.from_image(950,250,"15.png"),gamebox.from_image(1025,250,"15.png"),
-         gamebox.from_image(1100,250,"15.png"),gamebox.from_image(1175,250,"16.png")]
+for object in path2:
+    object.scale_by(.6)
+
+path2 = [gamebox.from_image(500,250,"14.png"),gamebox.from_image(575,250,"15.png"),gamebox.from_image(650,250,"15.png"),gamebox.from_image(725,190,"SnowMan.png"),gamebox.from_image(725,250,"15.png"),gamebox.from_image(800,250,"15.png"),gamebox.from_image(875,250,"15.png"),gamebox.from_image(950,250,"15.png"),gamebox.from_image(1025,250,"15.png"),gamebox.from_image(1100,250,"15.png"),gamebox.from_image(1175,250,"16.png")]
 for object in path2:
     object.scale_by(.6)
 
@@ -78,7 +84,6 @@ jump_count = 0
 paths = [path1,path2]
 current_path = paths[0]
 index = 0
-
 
 
 # main loop
@@ -106,11 +111,11 @@ def tick(keys):
     # DISPLAY START SCREEN UNTIL PLAYER PRESSES SPACE
     # --- Should add game instructions later
     if start_screen:
-        camera.draw(gamebox.from_text(250, 40, "SANTA RUN", 100, "white"))
-        camera.draw(gamebox.from_text(250, 310, "Press Space To Start", 50, "white"))
+        camera.draw(gamebox.from_text(250,40,"SANTA RUN",100,"white"))
+        camera.draw(gamebox.from_text(250,310,"Press Space To Start",50,"white"))
+        camera.draw(gamebox.from_text(240,200, "aab4ad                         thh4yj",40,"white"))
+        idle = gamebox.from_image(275,180,"Idle (1).png")
         camera.draw(gamebox.from_text(250, 350, 'Hold the I key to view instructions', 30, 'white'))
-        camera.draw(gamebox.from_text(240, 200, "aab4ad                         thh4yj", 40, "white"))
-        idle = gamebox.from_image(275, 180, "Idle (1).png")
         idle.scale_by(.4)
         camera.draw(idle)
         if pygame.K_SPACE in keys:
@@ -130,10 +135,8 @@ def tick(keys):
             camera.draw(gamebox.from_text(250, 40, "INSTRUCTIONS", 80, "white"))
             y = 150
             for i in instructions:
-              camera.draw(gamebox.from_text(250, y, i, 30, 'white'))
-              y += 25
-
-
+                camera.draw(gamebox.from_text(250, y, i, 30, 'white'))
+                y += 25
 
     elif play == True:
 
@@ -176,23 +179,17 @@ def tick(keys):
             camera.draw(santa)
 
 
-        # # STOPS CHARACTER STOPS WHEN IT HITS GROUND
-        # if santa.y - speed >= 282:
-        #     y_pos = 282
-        #     camera.draw(santa)
-        #     speed = 5
-
-
-        # WILL ADD OBSTACLES AND/OR BLOCKS TO WALK ON
+        # OBSTACLES OR BLOCKS TO WALK ON
+        camera.draw(level_title1)
+        level_title1.move(0,-5)
         for object in current_path:
-            if object.x < -1000:
-                current_path = paths[index + 1]
             camera.draw(object)
             if y_pos - speed > object.top -50 and santa.x < object.right and santa.x > object.left:
                 y_pos = object.top - 50
                 speed = 0
                 jump = False
             object.move(-10,0)
+            print("X: ",object.x)
 
 
 
@@ -212,12 +209,23 @@ def tick(keys):
             game_over = True
 
 
-
     # DISPLAY END SCREEN WHEN GAME IS OVER
     # --- add way to restart game (possibly at a checkpoint)
     elif game_over:
-            camera.draw(gamebox.from_text(250, 75, "GAME OVER", 100, "white"))
-            camera.draw(gamebox.from_text(250, 200, str(int(distance)) + " m", 200, "white"))
+        camera.draw(gamebox.from_text(250, 50, "GAME OVER", 100, "white"))
+        camera.draw(gamebox.from_text(250, 200, str(int(distance)) + " m", 200, "white"))
+        camera.draw(gamebox.from_text(250,350,"Press R to restart level",50,"white"))
+        if pygame.K_r in keys:
+            for object in path1:
+                object.move(distance*3*10,0)
+            level_title1.move(distance*3*-5,0)
+            y_pos = 230
+            speed = 0
+            distance = 0
+            game_over = False
+            play = True
+
+
 
 
     camera.display()
