@@ -1,3 +1,7 @@
+# Tyler Hendricks
+# computingID: thh4yj
+
+
 # Allison Branch and Tyler Hendricks
 # computingIDs: aab4ad and thh4yj
 
@@ -55,20 +59,35 @@ path1 = [gamebox.from_image(0,325,"14.png"),gamebox.from_image(75,325,"15.png"),
     ,gamebox.from_image(1150,400,"14.png"),gamebox.from_image(1225,400,"16.png"),gamebox.from_image(1425,350,"14.png"),gamebox.from_image(1500,350,"15.png"),gamebox.from_image(1575,350,"15.png"),gamebox.from_image(1575,350,"15.png"),gamebox.from_image(1650,350,"15.png"),gamebox.from_image(1725,350,"15.png"),gamebox.from_image(1800,350,"15.png"),gamebox.from_image(1875,350,"16.png")]
 
 
-path2 = [gamebox.from_image(0,350,"14.png"),gamebox.from_image(75,350,"15.png"),gamebox.from_image(150,350,"15.png"),gamebox.from_image(225,350,"15.png"),gamebox.from_image(300,350,"15.png"),gamebox.from_image(375,350,"16.png"),gamebox.from_image(375,290,"Crate.png"),gamebox.from_image(500,200,"14.png"),gamebox.from_image(575,200,"15.png"),gamebox.from_image(650,200,"15.png"),gamebox.from_image(725,200,"15.png"),gamebox.from_image(800,200,"15.png"),gamebox.from_image(875,200,"16.png")]
-
-levels = [path1,path2]
-
 
 level_title1 = gamebox.from_text(300,50,"LEVEL 1",75,"white")
+level_title2 = gamebox.from_text(300,-50,"LEVEL 2",75,"white")
+level_title3 = gamebox.from_text(300,-50,"LEVEL 3",75,"white")
+
+
+
+
+path2 = [gamebox.from_image(0,350,"14.png"),gamebox.from_image(75,350,"15.png"),gamebox.from_image(150,350,"15.png"),gamebox.from_image(225,350,"15.png"),
+         gamebox.from_image(300,350,"15.png"),
+         gamebox.from_image(375,350,"16.png"),gamebox.from_image(700,200,"Crate.png"),gamebox.from_image(500,250,"14.png"),gamebox.from_image(575,250,"15.png"),
+         gamebox.from_image(650,250,"15.png"),gamebox.from_image(800,190,"SnowMan.png"),gamebox.from_image(725,250,"15.png"),
+         gamebox.from_image(800,250,"16.png"),gamebox.from_image(950,350,"14.png"),gamebox.from_image(1000,350,"16.png"),
+         gamebox.from_image(1200,250,"14.png"),gamebox.from_image(1250,250,"16.png"),gamebox.from_image(1450,150,"14.png"),gamebox.from_image(1500,150,"16.png"),gamebox.from_image(1700,350,"14.png"),gamebox.from_image(1775,350,"15.png"),
+         gamebox.from_image(1850,350,"15.png"),gamebox.from_image(1925,350,"16.png")]
+
+path3 = [gamebox.from_image(-75,150,"14.png"),gamebox.from_image(-25,150,"16.png"),gamebox.from_image(175,350,"14.png"),gamebox.from_image(250,350,"15.png"),
+         gamebox.from_image(325,350,"15.png"),gamebox.from_image(400,350,"16.png")]
+
+
+
 
 for object in path1:
     object.scale_by(.6)
+for object in path3:
+    object.scale_by
 for object in path2:
     object.scale_by(.6)
-
-path2 = [gamebox.from_image(500,250,"14.png"),gamebox.from_image(575,250,"15.png"),gamebox.from_image(650,250,"15.png"),gamebox.from_image(725,190,"SnowMan.png"),gamebox.from_image(725,250,"15.png"),gamebox.from_image(800,250,"15.png"),gamebox.from_image(875,250,"15.png"),gamebox.from_image(950,250,"15.png"),gamebox.from_image(1025,250,"15.png"),gamebox.from_image(1100,250,"15.png"),gamebox.from_image(1175,250,"16.png")]
-for object in path2:
+for object in path3:
     object.scale_by(.6)
 
 # initialize variables
@@ -84,6 +103,7 @@ jump_count = 0
 paths = [path1,path2]
 current_path = paths[0]
 index = 0
+level = 1
 santa = gamebox.from_image(275, 180, "Idle (1).png")
 
 
@@ -102,8 +122,8 @@ def tick(keys):
     global current_path
     global index
     global paths
+    global level
     global santa
-
 
     # DRAW BACKGROUND AND GROUND
     camera.draw(background)
@@ -152,6 +172,7 @@ def tick(keys):
             santa = gamebox.from_image(150, y_pos,slide_stages[frame])
             santa.scale_by(.2)
 
+
         # JUMP WHEN UP ARROW PRESSED
         elif (pygame.K_UP in keys or pygame.K_w in keys) and y_pos >= 20:
             jump = True
@@ -159,8 +180,6 @@ def tick(keys):
             santa = gamebox.from_image(150, y_pos, jump_stages[0])
             santa.scale_by(.2)
             keys.clear()
-
-
 
         if jump:
             santa = gamebox.from_image(150, y_pos, jump_stages[jump_count])
@@ -170,21 +189,46 @@ def tick(keys):
                 jump_count = 0
                 jump = False
 
+
         # RUN
-        if jump is False and pygame.K_DOWN not in keys:
+        if jump == False and not pygame.K_DOWN in keys:
             santa = gamebox.from_image(150, y_pos, run_stages[frame])
             santa.scale_by(.2)
 
+
         # OBSTACLES OR BLOCKS TO WALK ON
+
         camera.draw(level_title1)
         level_title1.move(0,-5)
+        camera.draw(level_title2)
+        level_title2.move(0,-5)
+        camera.draw(level_title3)
+        level_title3.move(0,-5)
+
+
         for object in current_path:
             camera.draw(object)
             if y_pos - speed > object.top -50 and santa.x < object.right and santa.x > object.left:
                 y_pos = object.top - 50
                 speed = 0
                 jump = False
-            object.move(-10, 0)
+
+            if object.x < -1500 and level == 2:
+                current_path = path3
+                print("LEVEL 3")
+                distance = 0
+                level_title3.y = 50
+
+            if object.x < -1500 and level == 1:
+                print("LEVEL 2")
+                current_path = path2
+                distance = 0
+                level += 1
+                level_title2.y = 50
+
+
+
+            object.move(-10,0)
 
 
 
@@ -211,9 +255,20 @@ def tick(keys):
         camera.draw(gamebox.from_text(250, 200, str(int(distance)) + " m", 200, "white"))
         camera.draw(gamebox.from_text(250,350,"Press R to restart level",50,"white"))
         if pygame.K_r in keys:
-            for object in path1:
-                object.move(distance*3*10,0)
-            level_title1.move(distance*3*-5,0)
+            if current_path == path1:
+                for object in path1:
+                    object.move(distance*3*10,0)
+                level_title1.y = 50
+            if current_path == path2:
+                for object in path2:
+                    object.move(distance*3*10,0)
+                level_title2.y = 50
+            if current_path == path3:
+                for object in path3:
+                    object.move(distance*3*10,0)
+                level_title2.y = 50
+
+
             y_pos = 230
             speed = 0
             distance = 0
