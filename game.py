@@ -94,7 +94,24 @@ level3 = [gamebox.from_image(-75, 150, "14.png"), gamebox.from_image(-25, 150, "
           gamebox.from_image(700, 150, "Crate.png"), tree,
           gamebox.from_image(1140, 350, "14.png"), gamebox.from_image(1160, 350, "16.png"),
           gamebox.from_image(1340, 250, "14.png"), gamebox.from_image(1360, 250, "16.png"),
+          gamebox.from_image(1540, 125, "14.png"), gamebox.from_image(1600, 125, "16.png"),
+          gamebox.from_image(1610, 350, "14.png"), gamebox.from_image(1685, 350, "15.png"),
+          gamebox.from_image(1760, 350, "15.png"), gamebox.from_image(1835, 350, "15.png"),
+          gamebox.from_image(1900, 350, "16.png")
+          ]
+
+level4 = [gamebox.from_image(-75, 125, "14.png"), gamebox.from_image(-50, 125, "16.png"),
+          gamebox.from_image(90, 125, "14.png"), gamebox.from_image(150, 125, "16.png"),
+          gamebox.from_image(170, 350, "14.png"), gamebox.from_image(245, 350, "15.png"),
+          gamebox.from_image(320, 350, "15.png"), gamebox.from_image(395, 350, "15.png"),
+          gamebox.from_image(470, 350, "16.png"), gamebox.from_image(560, 250, "14.png"),
+          gamebox.from_image(625, 250, "16.png"), gamebox.from_image(825, 250, "14.png"),
+          gamebox.from_image(890, 250, "16.png"), gamebox.from_image(850, 175, "Snowman.png"),
+          gamebox.from_image(590, 200, "Stone.png"), gamebox.from_image(1191, 310, 'Crystal.png'),
+          gamebox.from_image(1175, 350, "14.png"), gamebox.from_image(1240, 350, "16.png"),
+          gamebox.from_image(1450, 250, "14.png"), gamebox.from_image(1500, 250, "16.png"),
           gamebox.from_image(1540, 125, "14.png"), gamebox.from_image(1560, 125, "16.png")]
+
 
 for object in level1:
     object.scale_by(.6)
@@ -102,10 +119,13 @@ for object in level2:
     object.scale_by(.6)
 for object in level3:
     object.scale_by(.6)
+for object in level4:
+    object.scale_by(.6)
 
 level_title1 = gamebox.from_text(255, 75, "LEVEL 1", 100, "white")
 level_title2 = gamebox.from_text(255, -100, "LEVEL 2", 100, "white")
 level_title3 = gamebox.from_text(255, -100, "LEVEL 3", 100, "white")
+level_title4 = gamebox.from_text(255, -100, 'LEVEL 4', 100, 'white')
 
 
 # initialize variables
@@ -118,8 +138,8 @@ speed = 0
 y_pos = 220
 jump = False
 jump_count = 0
-current_level = level1
-level = 1
+current_level = level3
+level = 3
 santa = gamebox.from_image(275, 180, "Idle (1).png")
 
 
@@ -213,7 +233,10 @@ def tick(keys):
         level_title2.move(0, -1)
         camera.draw(level_title3)
         level_title3.move(0, -1)
+        camera.draw(level_title4)
+        level_title4.move(0, -1)
 
+        # Collision detections
         for object in current_level:
             camera.draw(object)
             if y_pos - speed > object.top - 50 and object.left < santa.x < object.right:
@@ -225,10 +248,15 @@ def tick(keys):
                     play = False
 
             # CHANGE TO NEXT LEVEL WHEN LEVEL IS OVER
-            if object.x < -1500 and level == 3:
+            if object.x < -1500 and level == 4:
                 distance = 50
                 game_over = True
                 play = False
+            if object.x < -1500 and level == 3:
+                distance = 0
+                current_level = level4
+                level_title4.y = 50
+                level += 1
             if object.x < -1500 and level == 2:
                 current_level = level3
                 distance = 0
@@ -260,7 +288,7 @@ def tick(keys):
     elif game_over:
 
         # IF ALL LEVELS HAVE BEEN COMPLETED ALLOW USER TO CHOOSE A LEVEL TO REPLAY
-        if distance == 50 and level == 3:
+        if distance == 50 and level == 4:
             camera.draw(gamebox.from_text(250, 50, "CONGRATULATIONS", 50, "white"))
             camera.draw(gamebox.from_text(250, 150, "All levels completed!", 50, "white"))
             camera.draw(gamebox.from_text(250, 350, "Replay a level. (Press 1,2 or 3) ", 50, "white"))
@@ -295,6 +323,16 @@ def tick(keys):
                     distance = 0
                     game_over = False
                     play = True
+            if pygame.K_4 in level4:
+                for object in level4:
+                    object.move(1500, 0)
+                    level_title4.y = 50
+                    current_level = level4
+                    y_pos = 230
+                    speed = 0
+                    distance = 0
+                    game_over = False
+                    play = True
 
         # IF ALL LEVEL FAILED COMPLETED ALLOW USER TO RETRY CURRENT LEVEL FROM BEGINNING
         else:
@@ -318,6 +356,12 @@ def tick(keys):
                         object.move(distance*3*10, 0)
                     level_title3.y = 50
 
+                if current_level == level4:
+                    for object in level4:
+                        object.move(distance*3*10, 0)
+                    level_title4.y = 50
+
+
                 y_pos = 230
                 speed = 0
                 distance = 0
@@ -328,6 +372,7 @@ def tick(keys):
         camera.draw(santa)
 
     camera.display()
+
 
 # NOTE: The warning: libpng warning: iCCP: known incorrect sRGB profile prints in the console after the window is closed
 # this does not affect the game and is caused by the resizing of the png image.
